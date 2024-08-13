@@ -1,16 +1,22 @@
+"use client";
+
 import { createContext, useContext } from "react";
 // import useLocalStorage from "../../hooks/useLocalStorage";
 import useSessionStorage from "../../hooks/useSessionStorage";
 import { Product } from "../../models/product";
-import { CartContextType, CartItem, CartProviderProps } from "./cartContext.types";
+import {
+	CartContextType,
+	CartItem,
+	CartProviderProps,
+} from "./cartContext.types";
 
 const CartContext = createContext<CartContextType | null>(null);
 
 function CartProvider({ children }: CartProviderProps) {
-  // const [cart, setCart] = useLocalStorage<CartItem[]>("cart", []);
-  const [cart, setCart] = useSessionStorage<CartItem[]>("cart", []);
+	// const [cart, setCart] = useLocalStorage<CartItem[]>("cart", []);
+	const [cart, setCart] = useSessionStorage<CartItem[]>("cart", []);
 
-  /*
+	/*
   function addItem(product, quantity) {
     setCart(prevItems => {
       const itemIndex = prevItems.findIndex(item => item.product.id === product.id);
@@ -49,68 +55,84 @@ function CartProvider({ children }: CartProviderProps) {
   }
   */
 
-  function addCartItem(product: Product) {
-    setCart(cart => [...cart, { product, quantity: 1 }]);
-  }
+	function addCartItem(product: Product) {
+		setCart((cart) => [...cart, { product, quantity: 1 }]);
+	}
 
-  function removeCartItem(product: Product) {
-    setCart(cart => cart.filter(cartItem => cartItem.product.id !== product.id));
-  }
+	function removeCartItem(product: Product) {
+		setCart((cart) =>
+			cart.filter((cartItem) => cartItem.product.id !== product.id)
+		);
+	}
 
-  function isInCart(product: Product) {
-    return cart.some(cartItem => cartItem.product.id === product.id);
-  }
+	function isInCart(product: Product) {
+		return cart.some((cartItem) => cartItem.product.id === product.id);
+	}
 
-  function toggleCartItem(product: Product) {
-    if (isInCart(product)) {
-      removeCartItem(product);
-    } else {
-      addCartItem(product);
-    }
-  }
+	function toggleCartItem(product: Product) {
+		if (isInCart(product)) {
+			removeCartItem(product);
+		} else {
+			addCartItem(product);
+		}
+	}
 
-  function incrementCartItem(product: Product) {
-    setCart(cart => {
-      return cart.map(cartItem => {
-        if (cartItem.product.id === product.id) {
-          return { ...cartItem, quantity: cartItem.quantity + 1 };
-        }
-        return cartItem;
-      });
-    });
-  }
+	function incrementCartItem(product: Product) {
+		setCart((cart) => {
+			return cart.map((cartItem) => {
+				if (cartItem.product.id === product.id) {
+					return { ...cartItem, quantity: cartItem.quantity + 1 };
+				}
+				return cartItem;
+			});
+		});
+	}
 
-  function clearCart() {
-    setCart([]);
-  }
+	function clearCart() {
+		setCart([]);
+	}
 
-  function decrementCartItem(product: Product) {
-    setCart(cart => {
-      return cart.map(cartItem => {
-        if (cartItem.product.id === product.id) {
-          const newQuantity = cartItem.quantity - 1;
-          return { ...cartItem, quantity: newQuantity >= 1 ? newQuantity : 1 };
-        }
-        return cartItem;
-      });
-    });
-  }
+	function decrementCartItem(product: Product) {
+		setCart((cart) => {
+			return cart.map((cartItem) => {
+				if (cartItem.product.id === product.id) {
+					const newQuantity = cartItem.quantity - 1;
+					return {
+						...cartItem,
+						quantity: newQuantity >= 1 ? newQuantity : 1,
+					};
+				}
+				return cartItem;
+			});
+		});
+	}
 
-  return (
-    <CartContext.Provider value={{ cart, addCartItem, removeCartItem, isInCart, toggleCartItem, incrementCartItem, decrementCartItem, clearCart }}>
-      {children}
-    </CartContext.Provider>
-  );
+	return (
+		<CartContext.Provider
+			value={{
+				cart,
+				addCartItem,
+				removeCartItem,
+				isInCart,
+				toggleCartItem,
+				incrementCartItem,
+				decrementCartItem,
+				clearCart,
+			}}
+		>
+			{children}
+		</CartContext.Provider>
+	);
 }
 
 function useCart() {
-  const context = useContext(CartContext);
+	const context = useContext(CartContext);
 
-  if (!context) {
-    throw new Error("useCart must be used within a CartProvider");
-  }
+	if (!context) {
+		throw new Error("useCart must be used within a CartProvider");
+	}
 
-  return context;
+	return context;
 }
 
 export { CartProvider, useCart };
