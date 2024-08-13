@@ -7,6 +7,8 @@ const config: Config = {
 		"./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
 		"./src/components/**/*.{js,ts,jsx,tsx,mdx}",
 		"./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+		// Add ui core for tailwindcss to scan
+		"./src/ui-core/**/*.{js,ts,jsx,tsx,mdx}",
 	],
 	theme: {
 		extend: {
