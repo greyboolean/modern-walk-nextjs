@@ -1,3 +1,5 @@
+"use client"
+
 // import { useEffect, useRef } from "react";
 import { useCart } from "../../../../context/cart/cartContext";
 import { CartItem } from "../../molecules";
