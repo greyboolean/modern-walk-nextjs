@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { useAuth, useClerk } from "@clerk/nextjs";
 import { useWatchlist } from "../../../../context/watchlist/watchlistContext";
