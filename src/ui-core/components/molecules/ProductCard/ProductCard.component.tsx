@@ -1,12 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import Image from "next/image";
 import { useAuth, useClerk } from "@clerk/nextjs";
 import { useWatchlist } from "../../../../context/watchlist/watchlistContext";
 import { useCart } from "../../../../context/cart/cartContext";
 import { Button } from "../../atoms/Button";
 import { FaHeart, FaRegHeart } from "react-icons/fa6";
-import { BsCart, BsCartFill } from "react-icons/bs";
+import { BsCart, BsCartFill, BsChevronRight } from "react-icons/bs";
 import { ProductCardProps } from "./ProductCard.types";
 // import { useNavigate } from "react-router-dom";
 
@@ -92,6 +93,11 @@ function ProductCard({ product }: ProductCardProps) {
 					</Button>
 					<Button onClick={handleCartClick} size="sm">
 						{isInCart(product) ? <BsCartFill /> : <BsCart />}
+					</Button>
+					<Button size="sm" asChild>
+						<Link href={`/products/${product.id}`}>
+							<BsChevronRight />
+						</Link>
 					</Button>
 				</div>
 			</div>
