@@ -5,6 +5,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { CartProvider, WatchlistProvider } from "@/context";
 import { Layout, Main } from "@/ui-core";
+import Providers from "./Providers";
 // import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const quicksand = Quicksand({
@@ -32,15 +33,17 @@ export default function RootLayout({
 		<html lang="en" className={quicksand.variable}>
 			<body>
 				{/* <QueryClientProvider client={queryClient}> */}
-				<ClerkProvider>
+				{/* <ClerkProvider>
 					<WatchlistProvider>
-						<CartProvider>
-							<Layout>
-								<Main>{children}</Main>
-							</Layout>
-						</CartProvider>
+						<CartProvider> */}
+				<Providers>
+					<Layout>
+						<Main>{children}</Main>
+					</Layout>
+				</Providers>
+				{/* </CartProvider>
 					</WatchlistProvider>
-				</ClerkProvider>
+				</ClerkProvider> */}
 				{/* <ReactQueryDevtools initialIsOpen={false} /> */}
 				{/* </QueryClientProvider> */}
 			</body>
