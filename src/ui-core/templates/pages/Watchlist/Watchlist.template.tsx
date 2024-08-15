@@ -1,3 +1,5 @@
+"use client";
+
 import { useWatchlist } from "../../../../context/watchlist/watchlistContext";
 import { ProductGrid, Section } from "../../../components";
 
