@@ -1,4 +1,4 @@
-import axios from "axios";
+// import axios from "axios";
 import { Product } from "../models/product";
 
 /*
@@ -41,6 +41,7 @@ export const getProductsByCategory = async (
 };
 */
 
+/*
 export const getAllProducts = async (): Promise<Product[]> => {
 	const response = await axios.get(`https://fakestoreapi.com/products`);
 	return response.data.filter(
@@ -71,3 +72,32 @@ export const getProductById = async (id: string): Promise<Product | null> => {
 		return null;
 	}
 };
+*/
+
+export async function getAllProducts(): Promise<Product[]> {
+	const response = await fetch("https://fakestoreapi.com/products");
+	const products = await response.json();
+	return products.filter(
+		(product: Product) =>
+			product.category === "men's clothing" ||
+			product.category === "women's clothing"
+	);
+}
+
+export async function getProductsByCategory(
+	category: string
+): Promise<Product[]> {
+	const response = await fetch(
+		`https://fakestoreapi.com/products/category/${
+			category === "men" ? "men's%20clothing" : "women's%20clothing"
+		}`
+	);
+	const products = await response.json();
+	return products;
+}
+
+export async function getProductById(id: string): Promise<Product> {
+	const response = await fetch(`https://fakestoreapi.com/products/${id}`);
+	const product = await response.json();
+	return product;
+}
