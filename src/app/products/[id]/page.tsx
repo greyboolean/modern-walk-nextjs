@@ -1,29 +1,15 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
 import type { Product } from "@/models/product";
-import { getProductById } from "@/services/products";
+import { getAllProducts, getProductById } from "@/services/products";
 import { Product as ProductTemplate } from "@/ui-core";
 
-export default function Product() {
-	const { id } = useParams();
-	const productId = id as string;
+export async function generateStaticParams() {
+	const products = await getAllProducts();
 
-	const [product, setProduct] = useState<Product>();
-	const [loading, setLoading] = useState(true);
+	return products.map((product) => ({ id: String(product.id) }));
+}
 
-	useEffect(() => {
-		const fetchProduct = async () => {
-			const product = await getProductById(productId);
-			if (product) {
-				setProduct(product);
-				setLoading(false);
-			}
-		};
+export default async function Product({ params }: { params: { id: string } }) {
+	const product = await getProductById(params.id);
 
-		fetchProduct();
-	});
-
-	return <ProductTemplate product={product as Product} loading={loading}/>;
+	return <ProductTemplate product={product as Product} />;
 }
