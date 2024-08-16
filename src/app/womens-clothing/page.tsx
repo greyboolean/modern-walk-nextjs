@@ -5,6 +5,8 @@ export const metadata = {
 	title: "Women's Clothing",
 };
 
+export const dynamic = 'force-dynamic';
+
 export default async function Home() {
 	const products = await getProductsByCategory("women");
 
