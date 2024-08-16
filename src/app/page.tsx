@@ -8,6 +8,8 @@ export default function Home() {
 import { getAllProducts } from "@/services/products";
 import { Home as HomeTemplate } from "@/ui-core";
 
+export const revalidate = 60;
+
 export default async function Home() {
 	const products = await getAllProducts();
 
