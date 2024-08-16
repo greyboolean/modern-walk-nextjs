@@ -96,8 +96,12 @@ export async function getProductsByCategory(
 	return products;
 }
 
-export async function getProductById(id: string): Promise<Product> {
-	const response = await fetch(`https://fakestoreapi.com/products/${id}`);
-	const product = await response.json();
-	return product;
+export async function getProductById(id: string): Promise<Product | undefined> {
+	try {
+		const response = await fetch(`https://fakestoreapi.com/products/${id}`);
+		const product = await response.json();
+		return product;
+	} catch (error) {
+		return;
+	}
 }
