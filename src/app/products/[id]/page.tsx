@@ -2,6 +2,8 @@ import type { Product } from "@/models/product";
 import { getAllProducts, getProductById } from "@/services/products";
 import { Product as ProductTemplate } from "@/ui-core";
 
+export const revalidate = 300;
+
 export async function generateMetadata({ params }: { params: { id: string } }) {
 	const product = await getProductById(params.id);
 
